@@ -1,0 +1,86 @@
+[
+  {
+    "question": "How are API endpoints authenticated in Evidently starter kit?",
+    "expected_answer": "Bearer tokens picked up from the OpenAPI specification; the security scheme is bearerAuth."
+  },
+  {
+    "question": "What are the two ways to build API documentation mentioned in the docs?",
+    "expected_answer": "OpenAPI and MDX components."
+  },
+  {
+    "question": "Where can you view the OpenAPI specification file for the Plant Store Endpoints in the starter kit?",
+    "expected_answer": "In the starter's GitHub repo at api-reference/openapi.json (View the OpenAPI specification file)."
+  },
+  {
+    "question": "What security scheme is used by the API endpoints according to the sample in the docs?",
+    "expected_answer": "Bearer authentication (bearerAuth) as defined in the OpenAPI security section."
+  },
+  {
+    "question": "Which Evidently release introduced automated prompt optimization?",
+    "expected_answer": "Evidently v0.7.10."
+  },
+  {
+    "question": "What is the update label for the 2025-07-18 release note in the changelog?",
+    "expected_answer": "Evidently 0.7.11."
+  },
+  {
+    "question": "How do you create a Dataset object from a pandas DataFrame with automatic column mapping?",
+    "expected_answer": "Use Dataset.from_pandas(source_df, data_definition=DataDefinition())."
+  },
+  {
+    "question": "What happens if you pass an empty DataDefinition when creating a Dataset from pandas?",
+    "expected_answer": "Evidently will map columns by type (numerical, categorical) and by matching column names to roles (e.g., a column named 'target' is treated as the target)."
+  },
+  {
+    "question": "What are the column-type categories that you can map in DataDefinition?",
+    "expected_answer": "numerical_columns, datetime_columns, categorical_columns, text_columns."
+  },
+  {
+    "question": "What is the difference between DateTime and Timestamp in the DataDefinition context?",
+    "expected_answer": "DateTime is a column type that can include many columns; Timestamp is a role representing a single timestamp column (often used as an index on plots)."
+  },
+  {
+    "question": "How do you define text columns for LLM evaluations?",
+    "expected_answer": "Create a DataDefinition with text_columns set, e.g., DataDefinition(text_columns=[...]), then load with Dataset.from_pandas(source_df, data_definition=definition)."
+  },
+  {
+    "question": "What is the typical basic flow to run evaluations with Evidently?",
+    "expected_answer": "Import DataDefinition, prepare data, create Dataset, optionally add descriptors, configure a Report, optionally add tests, run the report, and explore results."
+  },
+  {
+    "question": "Is mapping text columns optional or mandatory, and why should you map them?",
+    "expected_answer": "Optional but useful; mapping text columns helps when you later run other evals that vary by column type."
+  },
+  {
+    "question": "What is a Descriptor in Evidently?",
+    "expected_answer": "A descriptor computes a score or label per row; you can combine multiple descriptors and use built-in or custom descriptors."
+  },
+  {
+    "question": "What are the two main ways to add descriptors to a Dataset?",
+    "expected_answer": "Option A: pass descriptors in Dataset.from_pandas; Option B: use eval_dataset.add_descriptors on an existing Dataset."
+  },
+  {
+    "question": "Give an example of descriptors commonly used in the docs to analyze text data.",
+    "expected_answer": "Sentiment on the 'answer' column, TextLength on 'answer', IncludesWords on 'answer'."
+  },
+  {
+    "question": "How can you preview descriptor results before generating a report?",
+    "expected_answer": "Call eval_dataset.as_dataframe() to preview results."
+  },
+  {
+    "question": "What is the purpose of LLM-as-a-judge descriptors and what is required to use them?",
+    "expected_answer": "They prompt an external LLM to return an evaluation score; you must provide an API key to use the corresponding LLM."
+  },
+  {
+    "question": "What is TestSummary in the context of Descriptor Tests?",
+    "expected_answer": "TestSummary aggregates multiple tests into one summary column and can indicate success if all tests pass (e.g., with success_all)."
+  },
+  {
+    "question": "What is ColumnTest used for in descriptor tests?",
+    "expected_answer": "To apply tests to any column, including metadata or precomputed values."
+  },
+  {
+    "question": "Where can you configure and run a report to summarize results, according to the docs?",
+    "expected_answer": "Using the Report class with presets like TextEvals and other metrics; e.g., report = Report([TextEvals()]); my_eval = report.run(eval_dataset)."
+  }
+]
