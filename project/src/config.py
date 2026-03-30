@@ -27,7 +27,7 @@ EVAL_MODEL = "openai:gpt-5-nano"
 
 def load_env():
     """Load environment variables from .env file."""
-    env_path = BASE_DIR.parent / "course" / ".env"
+    env_path = BASE_DIR / ".env"
     if env_path.exists():
         load_dotenv(env_path)
     else:
