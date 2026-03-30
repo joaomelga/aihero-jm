@@ -1,0 +1,169 @@
+{
+  "agent_name": "evidently_agent",
+  "system_prompt": [
+    "\nYou are a helpful assistant about Evidently - an open-source Python library to evaluate, test, and monitor ML and LLM systems, from experiments to production.\n\nUse the search tool to find relevant information before answering questions.\n\nIf you can find specific information through search, use it to provide accurate\nanswers.\n\nIf the search doesn't return relevant results, let the user know and provide\ngeneral guidance\n"
+  ],
+  "provider": "openai",
+  "model": "gpt-4o-mini",
+  "tools": [
+    "text_search"
+  ],
+  "messages": [
+    {
+      "parts": [
+        {
+          "content": "What should be in a test dataset for AI evaluation?",
+          "timestamp": "2026-03-30T11:51:47.430816+00:00",
+          "part_kind": "user-prompt"
+        }
+      ],
+      "timestamp": "2026-03-30T11:51:47.430816+00:00",
+      "instructions": "You are a helpful assistant about Evidently - an open-source Python library to evaluate, test, and monitor ML and LLM systems, from experiments to production.\n\nUse the search tool to find relevant information before answering questions.\n\nIf you can find specific information through search, use it to provide accurate\nanswers.\n\nIf the search doesn't return relevant results, let the user know and provide\ngeneral guidance",
+      "kind": "request",
+      "run_id": "b2ffdc07-5cbc-4664-9269-67c9c5e24d42",
+      "metadata": null
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "text_search",
+          "args": "{\"query\":\"test dataset AI evaluation\"}",
+          "tool_call_id": "call_Ko4UlusQ3FsL8342gOoF3BNI",
+          "id": null,
+          "provider_name": null,
+          "provider_details": null,
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "input_tokens": 170,
+        "cache_write_tokens": 0,
+        "cache_read_tokens": 0,
+        "output_tokens": 17,
+        "input_audio_tokens": 0,
+        "cache_audio_read_tokens": 0,
+        "output_audio_tokens": 0,
+        "details": {
+          "accepted_prediction_tokens": 0,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "model_name": "gpt-4o-mini-2024-07-18",
+      "timestamp": "2026-03-30T11:51:48.038515+00:00",
+      "kind": "response",
+      "provider_name": "openai",
+      "provider_url": "https://api.openai.com/v1/",
+      "provider_details": {
+        "finish_reason": "tool_calls",
+        "timestamp": "2026-03-30T11:51:47+00:00"
+      },
+      "provider_response_id": "chatcmpl-DP5Rj7RyNfT43z9r5osSccbCaQClz",
+      "finish_reason": "tool_call",
+      "run_id": "b2ffdc07-5cbc-4664-9269-67c9c5e24d42",
+      "metadata": null
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "text_search",
+          "content": [
+            {
+              "start": 0,
+              "chunk": "Retrieval-Augmented Generation (RAG) systems rely on retrieving answers from a knowledge base before generating responses. To evaluate them effectively, you need a test dataset that reflects what the system *should* know.\n\nInstead of manually creating test cases, you can generate them directly from your knowledge source, ensuring accurate and relevant ground truth data.\n\n## Create a RAG test dataset\n\nYou can generate ground truth RAG dataset from your data source.\n\n### 1. Create a Project\n\nIn the Evidently UI, start a new Project or open an existing one.\n\n* Navigate to \u201cDatasets\u201d in the left menu.\n* Click \u201cGenerate\u201d and select the \u201cRAG\u201d option.\n\n![](/images/synthetic/synthetic_data_select_method.png)\n\n### 2. Upload your knowledge base\n\nSelect a file containing the information your AI system retrieves from. Supported formats: Markdown (.md), CSV, TXT, PDFs. Choose how many inputs to generate.\n\n![](/images/synthetic/synthetic_data_inputs_example_upload.png)\n\nSimply drop the file, then:\n\n* Choose the number of inputs to generate.\n* Choose if you want to include the context used to generate the answer.\n\n![](/images/synthetic/synthetic_data_inputs_example_upload2.png)\n\nThe system automatically extracts relevant facts and generates user-like questions to your data source with ground truth answers.\n\n<Info>\n  Note that it may take some time to process the dataset. Limits apply on the free plan.\n</Info>\n\n### 3. Review the test cases\n\nYou can preview and refine the generated dataset.\n\n![](/images/synthetic/synthetic_data_rag_example_result.png)\n\nYou can:\n\n* Use \u201cMore like this\u201d to add more variations.\n* Drop rows that aren\u2019t relevant.\n* Manually edit questions or responses.\n\n### 4. Save the Dataset\n\nOnce you are finished, store the dataset. You can download it as a CSV file or access it via the Python API using the dataset ID to use in your evaluation.\n\n<Info>\n  **Dataset API.** How to work with [Evidently datasets](/docs/platform/datasets_overview).\n</Info>",
+              "title": "RAG evaluation dataset",
+              "description": "Synthetic data for RAG.",
+              "filename": "docs-main/synthetic-data/rag_data.mdx"
+            },
+            {
+              "start": 3000,
+              "chunk": " Inputs, context, and outputs (for RAG evaluation)\n</Info>\n\n<Info>\n  **Collecting live data**. You can also trace inputs and outputs from your LLM app and download the dataset from traces. See the [Tracing Quickstart](/quickstart_tracing)\n</Info>\n\n## 3. Run evaluations\n\nWe'll evaluate the answers for:\n\n- **Sentiment:** from -1 (negative) to 1 (positive)\n- **Text length:** character count\n- **Denials:** refusals to answer. This uses an LLM-as-a-judge with built-in prompt.\n\nEach evaluation is a `descriptor`. It adds a new score or label to each row in your dataset.\n\nFor LLM-as-a-judge, we'll use OpenAI GPT-4o mini. Set OpenAI key as an environment variable:\n\n```python\n## import os\n## os.environ[\"OPENAI_API_KEY\"] = \"YOUR KEY\"\n```\n\n<Info>\n  If you don't have an OpenAI key, you can use a keyword-based check `IncludesWords` instead.\n</Info>\n\nTo run evals, pass the dataset and specify the list of descriptors to add:\n\n```python\neval_dataset = Dataset.from_pandas(\n    eval_df,\n    data_definition=DataDefinition(),\n    descriptors=[\n        Sentiment(\"answer\", alias=\"Sentiment\"),\n        TextLength(\"answer\", alias=\"Length\"),\n        DeclineLLMEval(\"answer\", alias=\"Denials\")]) \n\n# Or IncludesWords(\"answer\", words_list=['sorry', 'apologize'], alias=\"Denials\")\n```\n\n**Congratulations\\!** You've just run your first eval. Preview the results locally in pandas:\n\n```python\neval_dataset.as_dataframe()\n```\n\n![](/images/examples/llm_quickstart_preview.png)\n\n<Info>\n  **What other evals are there?** Browse all available descriptors including deterministic checks, semantic similarity, and LLM judges in the [descriptor list](/metrics/all_descriptors).\n</Info>\n\n## 4.  Create a Report\n\n**Create and run a Report**. It will summarize the evaluation results. \n\n```python\nreport = Report([\n    TextEvals()\n])\n\nmy_eval = report.run(eval_dataset, None)\n```\n\n**Local preview**. In a Python environment like Jupyter notebook or Colab, run:\n\n```python\nmy_eval\n```\n\nThis will render the Report directly in t",
+              "title": "LLM Evaluation",
+              "description": "Evaluate text outputs in under 5 minutes",
+              "filename": "docs-main/quickstart_llm.mdx"
+            },
+            {
+              "start": 1000,
+              "chunk": " you are:\n\n* You're starting from scratch and don\u2019t have real data.\n* You need to scale a manually designed dataset with more variation.\n* You want to test edge cases, adversarial inputs, or system robustness.\n* You're evaluating complex AI systems like RAG and AI agents.\n\n![](/images/synthetic/synthetic_adversarial_img.png)\n\nSynthetic data is not a replacement for real data or expert-designed tests \u2014 it\u2019s a way to add variety and speed up the process. With synthetic data you can:\n\n* Quickly generate hundreds structured test cases.\n* Fill gaps by adding missing scenarios and tricky inputs.\n* Create controlled variations to evaluate specific weaknesses.\n\nIt\u2019s a practical way to expand your evaluation dataset efficiently while keeping human expertise focused on high-value testing.\n\nSynthetic data can also work for **complex AI systems** where designing test cases is simply difficult. For example, in RAG evaluation, synthetic data helps create input-output datasets from knowledge bases. In AI agent testing, it enables multi-turn interactions across different scenarios.",
+              "title": "Why synthetic data?",
+              "description": "When do you need synthetic data in LLM evaluations.",
+              "filename": "docs-main/synthetic-data/why_synthetic.mdx"
+            },
+            {
+              "start": 0,
+              "chunk": "You may need evaluations at different stages of your AI product development:\n\n* **Ad hoc analysis.** Spot-check the quality of your data or AI outputs.\n\n* **Experiments**. Test different parameters, models, or prompts and compare outcomes.\n\n* **Safety and adversarial testing.** Evaluate how your system handles edge cases and adversarial inputs, including on synthetic data.\n\n* **Regression testing.** Ensure the performance does not degrade after updates or fixes.\n\n* **Monitoring**. Track the response quality for production systems.\n\nEvidently supports all these workflows. You can run evals locally or directly on the platform.\n\n## Evaluations via API\n\n<Check>\n  Supported in: `Evidently OSS`, `Evidently Cloud` and `Evidently Enterprise`.\n</Check>\n\nThis is perfect for experiments, CI/CD workflows, or custom evaluation pipelines.\n\n![](/images/evals_flow_python.png)\n\n**How it works**:\n\n* Run Python-based evaluations on your AI outputs by generating Reports.\n\n* Upload results to the Evidently Platform.\n\n* Use the Explore feature to compare and debug results between runs.\n\n**Next step:** check the Quickstart for [ML](/quickstart_ml) or [LLM](/quickstart_llm).\n\n## No-code evaluations\n\n<Check>\n  Supported in `Evidently Cloud` and `Evidently Enterprise`.\n</Check>\n\nThis option lets you run evaluations directly in the user interface. This is great for non-technical users or when you prefer to run evaluations on Evidently infrastructure.\n\n![](/images/evals_flow_nocode.png)\n\n**How it works**:\n\n* **Analyze CSV datasets**. Drag and drop CSV files and evaluate their contents on the Platform.\n\n* **Evaluate uploaded datasets**. Assess collected [traces](/docs/platform/tracing_overview) from instrumented LLM applications or any [Datasets](/docs/platform/datasets_overview) you previously uploaded or generated.\n\nNo-code workflows create the same Reports or Test Suites you'd generate using Python. The rest of the workflow is the same. After you run your evals with any method, you can acces",
+              "title": "Overview",
+              "description": "Running evals on the platform.",
+              "filename": "docs-main/docs/platform/evals_overview.mdx"
+            },
+            {
+              "start": 1000,
+              "chunk": "a set of Tests to evaluate your data or AI system. Each Report Preset has this option. \n\nEnable it by setting `include_tests=True` on the Report level. (Default: False).\n\n```python\nreport = Report([\n    DataSummaryPreset(),\n],\ninclude_tests=True)\n```\n\nFor example, while the `DataSummaryPreset()` Report simply shows descriptive stats of your data, adding the Tests will additionally run multiple checks on data quality and expected column statistics.\n\nThe automatic Test conditions can either\n* be derived from a reference dataset, or\n* use built-in heuristics.\n\n**Using reference**. When you provide a reference dataset, Tests compare the new data against it:\n\n```Python\nmy_eval = report.run(eval_data_1, eval_data_2) # eval_data_2 is reference\n```\n\nFor example, the check on missing values will validate if the current share of missing values is within +/-10% of the reference.\n\n<Note>\nNote that in this case the order matters: the first `eval_data_1` is the current data you evaluate, the second `eval_data_2` is the reference dataset you consider as a baseline and use to generate test conditions.\n</Note>\n\n**Using heuristics**. Without reference, Tests use predefined rules:\n\n```Python\nmy_eval = report.run(eval_data_1, None) # no reference data\n```\n\nIn this case, the missing values Test simply expects 0% missing values. Similarly, classification accuracy Test will compare the performance against a dummy model, etc. Some metrics (like min/max/mean values) don't have default heuristics.\n\n<Info>\n  **How to check Test defaults?** Consult the [All Metrics](/metrics/all_metrics) reference table.\n</Info>\n\n### Individual Tests with defaults\n\nPresets are great for a start or quick sanity checks, but often you'd want to select specific Tests. For example, instead of running checks on all value statistics, validate only mean or max.\n\nYou can pick the Tests while still using default conditions.\n\n**Select Tests**. List the individual Metrics, and choose the the `include_Tests` option:\n\n```Py",
+              "title": "Tests",
+              "description": "How to run conditional checks.",
+              "filename": "docs-main/docs/library/tests.mdx"
+            },
+            {
+              "start": 0,
+              "chunk": "We\u2019re building Evidently AI to help teams ship reliable AI products: whether it\u2019s an ML model, an LLM app, or a complex agent workflow.\n\nOur tools are model-, framework-, and application-agnostic, so you can build and evaluate AI systems your way without limitations.\n\n## We are open-source\n\n[**Evidently**](https://github.com/evidentlyai/evidently) is an open-source library with over 25 million downloads, 5000+ GitHub stars, and a thriving community. It's licensed under Apache 2.0. This gives full transparency - you can see exactly how every metric works and trust the implementation. It also delivers an intuitive API designed for a great developer experience.\n\nThe **Evidently Platform** builds on the library with additional UI features and workflows for team collaboration. For enterprise users, we offer both Cloud and self-hosted options for full data privacy and control.\n\n## Evidently is very modular\u00a0\n\nEvidently is built to adapt to your needs without lock-ins or complex setups. It\u2019s modular and component-based, so you can start small: you don't have to deploy a service with multiple databases just to run a single eval.\n\n* Start with local ad hoc checks.\u00a0\n\n* Want to share results? Add a UI to track evaluations over time.\u00a0\n\n* When you run evals, choose to upload raw data or only evaluation results. It\u2019s up to you.\u00a0\n\n* Add monitoring as you are ready to move to production workflows.\n\nEvidently is built around the concept of **Presets** and **reasonable defaults**: you can run any evaluation with minimal setup, including with auto-generated test conditions for assertions. \n\nEvidently also integrates with your existing tools and lets you easily export metrics, reports, and datasets elsewhere.\u00a0\n\n## 100+ built-in evaluations\n\nEvidently puts evaluations and quality testing first.\u00a0\n\nMany other tools provide a system to run and log evals, but expect you to prepare the data and implement all the metrics from scratch. We ship **100+ built-in evaluations** that cover many ML an",
+              "title": "Why Evidently?",
+              "description": "Why choose Evidently.",
+              "filename": "docs-main/faq/why_evidently.mdx"
+            }
+          ],
+          "tool_call_id": "call_Ko4UlusQ3FsL8342gOoF3BNI",
+          "metadata": null,
+          "timestamp": "2026-03-30T11:51:48.056723+00:00",
+          "outcome": "success",
+          "part_kind": "tool-return"
+        }
+      ],
+      "timestamp": "2026-03-30T11:51:48.058226+00:00",
+      "instructions": "You are a helpful assistant about Evidently - an open-source Python library to evaluate, test, and monitor ML and LLM systems, from experiments to production.\n\nUse the search tool to find relevant information before answering questions.\n\nIf you can find specific information through search, use it to provide accurate\nanswers.\n\nIf the search doesn't return relevant results, let the user know and provide\ngeneral guidance",
+      "kind": "request",
+      "run_id": "b2ffdc07-5cbc-4664-9269-67c9c5e24d42",
+      "metadata": null
+    },
+    {
+      "parts": [
+        {
+          "content": "Creating a test dataset for AI evaluation involves several important considerations to ensure that the dataset accurately reflects the intended use cases and scenarios relevant to the AI system being evaluated. Here are some key elements to include in a test dataset for AI evaluation:\n\n1. **Diversity of Scenarios**: The dataset should encompass a variety of scenarios, including typical cases, edge cases, and potential failure modes. This helps in evaluating the robustness of the AI system.\n\n2. **Ground Truth Data**: Ensure that the dataset contains accurate ground truth labels or outputs against which the AI's predictions can be evaluated. This is crucial for assessing performance metrics.\n\n3. **Relevance to Use Cases**: The data should be representative of actual usage conditions to evaluate how the AI performs in real-world situations.\n\n4. **Adversarial Examples**: Including adversarial inputs can help test the AI system's resilience to input that is specifically designed to confuse or mislead it.\n\n5. **Variation in Inputs**: The dataset should include variations in input data to test how well the model generalizes beyond the training set, such as different phrasing, formats, or styles of input.\n\n6. **Synthetic Data**: If real data is scarce, synthetic data can be generated to fill gaps, such as for testing complex interactions in RAG (Retrieval-Augmented Generation) systems or multi-turn dialogues.\n\n7. **Balanced Distribution**: The dataset's distribution should be balanced across classes (if applicable), ensuring that no class is underrepresented, which can bias performance evaluations.\n\n8. **Performance Metrics**: Define clear metrics to evaluate the AI system, such as accuracy, precision, recall, F1 score, or any other relevant metric based on the application.\n\n9. **Traceability**: If applicable, include mechanisms to trace inputs and outputs for live data, allowing for easier debugging and iterative improvements.\n\n10. **Compatibility with Evaluation Tools**: Ensure the dataset's format and structure are compatible with the evaluation tools being used (e.g., CSV, JSON).\n\nBy incorporating these elements, the test dataset can effectively assess the performance and reliability of AI systems across different scenarios and conditions.",
+          "id": null,
+          "provider_name": null,
+          "provider_details": null,
+          "part_kind": "text"
+        }
+      ],
+      "usage": {
+        "input_tokens": 3104,
+        "cache_write_tokens": 0,
+        "cache_read_tokens": 2816,
+        "output_tokens": 434,
+        "input_audio_tokens": 0,
+        "cache_audio_read_tokens": 0,
+        "output_audio_tokens": 0,
+        "details": {
+          "accepted_prediction_tokens": 0,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "model_name": "gpt-4o-mini-2024-07-18",
+      "timestamp": "2026-03-30T11:51:58.025085+00:00",
+      "kind": "response",
+      "provider_name": "openai",
+      "provider_url": "https://api.openai.com/v1/",
+      "provider_details": {
+        "finish_reason": "stop",
+        "timestamp": "2026-03-30T11:51:49+00:00"
+      },
+      "provider_response_id": "chatcmpl-DP5RlR5GHNNSwobcppm6Lak0iOjVq",
+      "finish_reason": "stop",
+      "run_id": "b2ffdc07-5cbc-4664-9269-67c9c5e24d42",
+      "metadata": null
+    }
+  ],
+  "source": "user"
+}
