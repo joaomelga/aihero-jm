@@ -1,0 +1,162 @@
+{
+  "agent_name": "evidently_agent",
+  "system_prompt": [
+    "You are a helpful assistant about Evidently - an open-source Python library to evaluate, test, and monitor ML and LLM systems, from experiments to production.\n\nUse the search tool to find relevant information before answering questions.\n\nIf you can find specific information through search, use it to provide accurate answers.\n\nAlways include references by citing the filename of the source material you used.\n\nWhen citing the reference, replace \"evidently-main\" by the full path to the GitHub repository: \"https://github.com/evidentlyai/evidently/blob/main/\"\nFormat: [LINK TITLE](FULL_GITHUB_LINK)\n\nIf the search doesn't return relevant results, let the user know and provide general guidance."
+  ],
+  "provider": "openai",
+  "model": "gpt-4o-mini",
+  "tools": [
+    "text_search"
+  ],
+  "messages": [
+    {
+      "parts": [
+        {
+          "content": "What is AI evaluation using LLM as jugde?",
+          "timestamp": "2026-03-30T18:32:46.311058+00:00",
+          "part_kind": "user-prompt"
+        }
+      ],
+      "timestamp": "2026-03-30T18:32:46.312191+00:00",
+      "instructions": "You are a helpful assistant about Evidently - an open-source Python library to evaluate, test, and monitor ML and LLM systems, from experiments to production.\n\nUse the search tool to find relevant information before answering questions.\n\nIf you can find specific information through search, use it to provide accurate answers.\n\nAlways include references by citing the filename of the source material you used.\n\nWhen citing the reference, replace \"evidently-main\" by the full path to the GitHub repository: \"https://github.com/evidentlyai/evidently/blob/main/\"\nFormat: [LINK TITLE](FULL_GITHUB_LINK)\n\nIf the search doesn't return relevant results, let the user know and provide general guidance.",
+      "kind": "request",
+      "run_id": "cd72bfeb-9567-4787-b1c5-09a3ccf2a9cf",
+      "metadata": null
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "text_search",
+          "args": "{\"query\":\"AI evaluation using LLM as judge\"}",
+          "tool_call_id": "call_8c3Zs8BzEobQDtayEBOMlkTK",
+          "id": null,
+          "provider_name": null,
+          "provider_details": null,
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "input_tokens": 233,
+        "cache_write_tokens": 0,
+        "cache_read_tokens": 0,
+        "output_tokens": 20,
+        "input_audio_tokens": 0,
+        "cache_audio_read_tokens": 0,
+        "output_audio_tokens": 0,
+        "details": {
+          "accepted_prediction_tokens": 0,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "model_name": "gpt-4o-mini-2024-07-18",
+      "timestamp": "2026-03-30T18:32:53.846481+00:00",
+      "kind": "response",
+      "provider_name": "openai",
+      "provider_url": "https://api.openai.com/v1/",
+      "provider_details": {
+        "finish_reason": "tool_calls",
+        "timestamp": "2026-03-30T18:32:52+00:00"
+      },
+      "provider_response_id": "chatcmpl-DPBhs9DSqUWDCx7vTY0FoZQnC8ejZ",
+      "finish_reason": "tool_call",
+      "run_id": "cd72bfeb-9567-4787-b1c5-09a3ccf2a9cf",
+      "metadata": null
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "text_search",
+          "content": [
+            {
+              "chunk": "<Note>\n  **We have an applied course on LLM evaluations\\!** Free video course with 10\\+ tutorials. [Sign up](https://www.evidentlyai.com/llm-evaluation-course-practice).\n</Note>\n\n## Quickstarts\n\nIf you are new, start here.\n\n<CardGroup cols={3}>\n  <Card title=\"LLM quickstart\" icon=\"comment-text\" href=\"/quickstart_llm\">\n    Evaluate the quality of text outputs.\n  </Card>\n  <Card title=\"ML quickstart\" icon=\"table\" href=\"/quickstart_ml\">\n    Test tabular data quality and data drift.\n  </Card>\n  <Card title=\"Tracing quickstart\" icon=\"bars-staggered\" href=\"/quickstart_tracing\">\n    Collect inputs and outputs from AI your app.\n  </Card>\n</CardGroup>\n\n## LLM Tutorials\n\nEnd-to-end examples of specific workflows and use cases.\n\n<CardGroup cols={2}>\n  <Card title=\"LLM as a judge\" icon=\"scale-balanced\" href=\"/examples/LLM_judge\">\n    How to create and evaluate an LLM judge against human labels.\n  </Card>\n  <Card title=\"RAG evaluation\" icon=\"comment\" href=\"/examples/LLM_rag_evals\">\n    A walkthrough of different RAG evaluation metrics.\n  </Card>\n  <Card title=\"LLM as a jury\" icon=\"dice\" href=\"LLM_jury\">\n    Using multiple LLMs to evaluate the same output.\n  </Card>\n  <Card title=\"LLM evaluation methods\" icon=\"text\" href=\"LLM_evals\">\n    A walkthrough of different LLM evaluation methods. [CODE \\+ VIDEO]\n  </Card>\n  <Card title=\"Descriptor cookbook\" icon=\"book\" href=\"https://github.com/evidentlyai/evidently/blob/main/examples/cookbook/descriptors.ipynb\">\n    A walkthrough of different descriptors (deterministic, ML, etc.) a single notebook.\n  </Card>\n  <Card title=\"LLM judge prompt optimization (1)\" icon=\"hotel\" href=\"https://github.com/evidentlyai/evidently/blob/main/examples/cookbook/prompt_optimization_bookings_example.ipynb\">\n    Optimize a multi-class classifier using target labels.\n  </Card>\n  <Card title=\"LLM judge prompt optimization (2)\" icon=\"code\" href=\"https://github.com/evidentlyai/evidently/blob/main/examples/cookbook/prompt_optimization_code_review_example.ipynb\">\n ",
+              "filename": "docs-main/examples/introduction.mdx",
+              "title": "Tutorials and guides",
+              "description": "End-to-end code examples.",
+              "start": 0
+            },
+            {
+              "chunk": " LLM use cases, Evidently also helps you generate synthetic test datasets - such as RAG-style question-answer pairs from a knowledge base or synthetic inputs to cold-start your AI app testing.\n\n**\ud83d\udccc Links:** \n- [Synthetic data](docs/library/synthetic_data_api) \n\n## **3. Prompt optimization [NEW]**\n\n<Check>\n  **TL;DR**: We help write prompts using labeled or annotated data as a target.\n</Check>\n\nEvidently also includes tools for automated prompt writing. This features uses built-in evaluation capabilities to score prompt variations, optimizing them based on a target dataset and/or free-form user feedback.\n\nThis feature also help automatically generate LLM judge prompts to streamline the creation of custom evaluations.\n\n**\ud83d\udccc Links:** \n- [Prompt optimization](docs/library/prompt_optimization)\n\n## 4. **Tracking and Visualization UI**\n\n<Check>\n  **TL;DR**: There is also a minimal UI to store and track evaluation results.\n</Check>\n\nThe Evidently library also includes a lightweight self-hostable UI for storing, comparing, and visualizing evaluation results over time.\n\nWhile visual reports provide a snapshot of an evaluation for a specific period, dataset, or prompt version, the UI allows you to store multiple evaluations and track changes over time.\n\n![](/images/concepts/evidently_oss_ui-min.png)\n\n**\ud83d\udccc Links:**\n\n- See live demo: [https://demo.evidentlyai.com](https://demo.evidentlyai.com/). \n- [Self-hosting guide](/docs/setup/self-hosting)\n\n<Note>\n  The open-source UI is different from the Evidently Cloud / Enterprise platform version which has muliple additional features. Explore the [Evidently Platform capabailities](/docs/platform/overview). \n</Note>\n\n# Core evaluation concepts\n\nLet's take a look at the end-to-end evaluation process. It can be adapted to different metrics or data types, following the same worklows. \n\n## Dataset\n\nTo run an evaluation, you first need to prepare the data. For example, generate and trace outputs from your ML or LLM system.\n\n1. **Prepare your d",
+              "filename": "docs-main/docs/library/overview.mdx",
+              "title": "Introduction",
+              "description": "Core concepts and components of the Evidently Python library.",
+              "start": 3000
+            },
+            {
+              "chunk": "i.com/llm-evaluations-course), open-source [ML observability course](https://www.evidentlyai.com/ml-observability-course), [guides](https://www.evidentlyai.com/mlops-guides), and [blogs](https://www.evidentlyai.com/blog).\n\n## Handles both ML and LLM\u00a0\n\nEvidently supports both ML and LLM tasks. We believe this matters even if you\u2019re focused solely on LLMs and not training your models.\n\nReal-world AI systems are rarely just one thing, and two types of workflows overlap. For example:\n\n* an LLM-based chatbot may need **classification** steps like detecting user intent.\n\n* if you are building with RAG, you are solving a **ranking** problem first.\n\nThe Evidently Platform supports both complex nested workflows and structured tabular data, providing relevant metrics and views for each. This means you won't be locked into a single approach - or have to reinvent the wheel to measure things like Hit Rate or Precision over traces.\n\n## Built for collaboration\n\nEvidently started as an open-source project loved by data scientists and AI/ML engineers. But we\u2019re building more than a developer tool - we\u2019re building a platform where domain experts and engineers can work together easily.\n\nReliable AI systems require teams to work together: on curating test data, gathering feedback, and running evaluations. We build our platform with this in mind: combine **no-code** workflows for non-technical users with an intuitive **API**. Everyone gets what they need to do their best work.\n\n## Trusted partner\u00a0\n\nFounded in 2021, Evidently AI is built by a team with 10+ years of experience deploying AI in high-scale, critical scenarios. We are backed by world-class investors like Y Combinator, Fly Ventures, Runa Capital, Nauta Capital and angel investors. Our core Evidently library has a stable history of development and earned trust from the community and enterprise users alike.",
+              "filename": "docs-main/faq/why_evidently.mdx",
+              "title": "Why Evidently?",
+              "description": "Why choose Evidently.",
+              "start": 3000
+            },
+            {
+              "chunk": "s/customize_llm_judge#change-the-evaluator-llm) to see how you can select a different evaluator LLM. \n</Info>\n\n## 2.  Create the Dataset\n\nFirst, we'll create a toy Q&A dataset with customer support question that includes:\n\n- **Questions**. The inputs sent to the LLM app.\n- **Target responses**. The approved responses you consider accurate.\n- **New responses**. Imitated new responses from the system.\n- **Manual labels with explanation**. Labels that say if response is correct or not.\n\nWhy add the labels? It's a good idea to be the judge yourself before you write a prompt. This helps:\n\n- Formulate better criteria. You discover nuances that help you write a better prompt.\n- Get the \"ground truth\". You can use it to evaluate the quality of the LLM judge.\n\nUltimately, an LLM judge is a small ML system, and it needs its own evals\\!\n\n**Generate the dataframe**. Here's how you can create this dataset in one go:\n\n<Accordion title=\"Toy data to run the example\" defaultOpen={false}>\n  ```python\n  data = [\n    [\"Hi there, how do I reset my password?\",\n     \"To reset your password, click on 'Forgot Password' on the login page and follow the instructions sent to your registered email.\",\n     \"To change your password, select 'Forgot Password' on the login screen and follow the steps sent to your registered email address. If you don't receive the email, check your spam folder or contact support for assistance.\",\n     \"incorrect\", \"adds new information (contact support)\"],\n  \n    [\"Where can I find my transaction history?\",\n     \"You can view your transaction history by logging into your account and navigating to the 'Transaction History' section. Here, you can see all your past transactions. You can also filter the transactions by date or type for easier viewing.\",\n     \"Log into your account and go to 'Transaction History' to see all your past transactions. In this section, you can view and filter your transactions by date or type. This allows you to find specific transactions quic",
+              "filename": "docs-main/examples/LLM_judge.mdx",
+              "title": "LLM as a judge",
+              "description": "How to create and evaluate an LLM judge.",
+              "start": 3000
+            },
+            {
+              "chunk": "notebook](https://github.com/evidentlyai/community-examples/blob/main/tutorials/LLM_as_a_judge_tutorial_updated.ipynb) or [open it in Colab](https://colab.research.google.com/github/evidentlyai/community-examples/blob/main/tutorials/LLM_as_a_judge_tutorial_updated.ipynb).\n</Info>\n\n## 1.  Installation and Imports\n\nInstall Evidently:\n\n```python\npip install evidently\n```\n\nImport the required modules:\n\n```python\nimport pandas as pd\nimport numpy as np\n\nfrom evidently import Dataset\nfrom evidently import DataDefinition\nfrom evidently import Report\nfrom evidently import BinaryClassification\nfrom evidently.descriptors import *\nfrom evidently.presets import TextEvals, ValueStats, ClassificationPreset\nfrom evidently.metrics import *\n\nfrom evidently.llm.templates import BinaryClassificationPromptTemplate\n```\n\nPass your OpenAI key as an environment variable:\n\n```python\nimport os\nos.environ[\"OPENAI_API_KEY\"] = \"YOUR_KEY\"\n```\n\n<Info>\n**Using other evaluator LLMs**. Check the [LLM judge docs](/metrics/customize_llm_judge#change-the-evaluator-llm) to see how you can select a different evaluator LLM. \n</Info>\n\n## 2.  Create the Dataset\n\nFirst, we'll create a toy Q&A dataset with customer support question that includes:\n\n- **Questions**. The inputs sent to the LLM app.\n- **Target responses**. The approved responses you consider accurate.\n- **New responses**. Imitated new responses from the system.\n- **Manual labels with explanation**. Labels that say if response is correct or not.\n\nWhy add the labels? It's a good idea to be the judge yourself before you write a prompt. This helps:\n\n- Formulate better criteria. You discover nuances that help you write a better prompt.\n- Get the \"ground truth\". You can use it to evaluate the quality of the LLM judge.\n\nUltimately, an LLM judge is a small ML system, and it needs its own evals\\!\n\n**Generate the dataframe**. Here's how you can create this dataset in one go:\n\n<Accordion title=\"Toy data to run the example\" defaultOpen={false}>\n  ```python\n  ",
+              "filename": "docs-main/examples/LLM_judge.mdx",
+              "title": "LLM as a judge",
+              "description": "How to create and evaluate an LLM judge.",
+              "start": 2000
+            }
+          ],
+          "tool_call_id": "call_8c3Zs8BzEobQDtayEBOMlkTK",
+          "metadata": null,
+          "timestamp": "2026-03-30T18:32:57.620478+00:00",
+          "outcome": "success",
+          "part_kind": "tool-return"
+        }
+      ],
+      "timestamp": "2026-03-30T18:32:57.620478+00:00",
+      "instructions": "You are a helpful assistant about Evidently - an open-source Python library to evaluate, test, and monitor ML and LLM systems, from experiments to production.\n\nUse the search tool to find relevant information before answering questions.\n\nIf you can find specific information through search, use it to provide accurate answers.\n\nAlways include references by citing the filename of the source material you used.\n\nWhen citing the reference, replace \"evidently-main\" by the full path to the GitHub repository: \"https://github.com/evidentlyai/evidently/blob/main/\"\nFormat: [LINK TITLE](FULL_GITHUB_LINK)\n\nIf the search doesn't return relevant results, let the user know and provide general guidance.",
+      "kind": "request",
+      "run_id": "cd72bfeb-9567-4787-b1c5-09a3ccf2a9cf",
+      "metadata": null
+    },
+    {
+      "parts": [
+        {
+          "content": "AI evaluation using a Large Language Model (LLM) as a judge involves assessing the quality and accuracy of text outputs generated by AI systems. This approach leverages the LLM's capabilities to provide a form of evaluation analogous to human judgement. Here are some key aspects of this process:\n\n1. **Creating Evaluation Datasets**: Initially, you create a dataset that includes various inputs, such as questions and target responses. This dataset can also include new responses generated by the AI system and manual labels indicating whether each response is correct.\n\n2. **Ground Truth Establishment**: By labeling the data beforehand, evaluators can formulate better criteria for evaluation and establish a \"ground truth.\" This means they know what accurate responses should look like and can compare the LLM's outputs to these standards.\n\n3. **Prompt Optimization**: The prompts given to the LLM for evaluation can be optimized based on the quality of expected responses. This involves writing prompts that guide the LLM to assess outputs correctly by incorporating insights gained from the labeled data.\n\n4. **LLM's Unique Role**: The LLM acts as a small machine learning system that requires its own evaluations to ensure it is accurately judging the quality of other AI-generated responses.\n\n5. **Automated Evaluation Tools**: The Evidently library provides tools for automating this evaluation process, making it easier to score different variations of prompts and optimize them based on target datasets or user feedback.\n\nThe evaluation can be visually tracked and compared over time using various metrics to ensure ongoing quality and improvement.\n\nFor a practical guide on how to implement this procedure using the Evidently library, refer to [LLM as a Judge](https://github.com/evidentlyai/evidently/blob/main/docs-main/examples/LLM_judge.mdx).",
+          "id": null,
+          "provider_name": null,
+          "provider_details": null,
+          "part_kind": "text"
+        }
+      ],
+      "usage": {
+        "input_tokens": 2937,
+        "cache_write_tokens": 0,
+        "cache_read_tokens": 0,
+        "output_tokens": 358,
+        "input_audio_tokens": 0,
+        "cache_audio_read_tokens": 0,
+        "output_audio_tokens": 0,
+        "details": {
+          "accepted_prediction_tokens": 0,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "model_name": "gpt-4o-mini-2024-07-18",
+      "timestamp": "2026-03-30T18:33:05.057549+00:00",
+      "kind": "response",
+      "provider_name": "openai",
+      "provider_url": "https://api.openai.com/v1/",
+      "provider_details": {
+        "finish_reason": "stop",
+        "timestamp": "2026-03-30T18:32:57+00:00"
+      },
+      "provider_response_id": "chatcmpl-DPBhxfMeb6DZwqgCPirNGmXg8a7UR",
+      "finish_reason": "stop",
+      "run_id": "cd72bfeb-9567-4787-b1c5-09a3ccf2a9cf",
+      "metadata": null
+    }
+  ],
+  "source": "user"
+}
