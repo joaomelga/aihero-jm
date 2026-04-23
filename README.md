@@ -144,7 +144,3 @@ The evaluation pipeline tests the agent's quality using a two-step process:
 | [Sentence Transformers](https://www.sbert.net/) | Embedding model (`multi-qa-distilbert-cos-v1`) |
 | [Streamlit](https://streamlit.io/) | Web chat interface |
 | [uv](https://docs.astral.sh/uv/) | Python package and project manager |
-
-## Acknowledgments
-
-Built as part of the [AI Hero: 7-Day AI Agents Crash Course](https://aishippinglabs.com/courses/aihero) by [Alexey Grigorev](https://github.com/alexeygrigorev).
